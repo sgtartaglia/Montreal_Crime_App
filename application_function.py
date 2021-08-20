@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-import plotly as plt
+import plotly as px
 import requests
 import streamlit as st
 ## import and clean crime data
@@ -83,8 +83,6 @@ def YoY(postal):
     return df_year.groupby('year')['neighbourhood'].count()
     # return px.line(data_frame=df_year,x = year, y = None)
 
-YoY('h3g')
-YoY('h3g').plot(title='YOY Crime Stats')
 def crime_by_year(postal_code,year):
     df_new = df_eng.loc[(df_eng['postal codes'] == postal_code) & (df_eng['year'] == year)]
     return df_new.groupby('categorie')['neighbourhood'].count()
