@@ -67,22 +67,30 @@ df_eng['categorie'].replace({'Vol de véhicule à moteur':'Motor vehicle theft',
                                                     'Vols qualifiés':'Confirmed Theft',
                                                     'Infractions entrainant la mort':'Offenses resulting in death'}, inplace=True)
 df_eng.categorie.unique()
+
 def post_look_up(postal):
     postal = postal.upper()
     postal_df = df_eng.loc[df_eng['postal codes'] == postal]
-    return postal_df.groupby('categorie')['neighbourhood'].count()
-post_look_up('h3g')
+    df_groupby = postal_df.groupby('categorie')['neighbourhood'].count().reset_index()
+    df_groupby.rename(columns={'neighbourhood':'# of crimes','categorie':'category'}, inplace=True,)
+    return df_groupby
+
+
 df_eng.loc[df_eng['postal codes'] == 'H4B']
 df_eng['year'] = df_eng['date'].str.slice(0,4)
 df_eng.head()
+
 def YoY(postal):
     postal = postal.upper()
     df_year = df_eng.loc[df_eng['postal codes'] == postal]
     return df_year.groupby('year')['neighbourhood'].count()
-    # return px.line(data_frame=df_year,x = year, y = None)
+
 
 def crime_by_year(postal_code,year):
     df_new = df_eng.loc[(df_eng['postal codes'] == postal_code) & (df_eng['year'] == year)]
     return df_new.groupby('categorie')['neighbourhood'].count()
     
-crime_by_year('H3G','2021')
+
+def get_neighbourhood(postal):
+    hood = df_eng.loc[df_eng['postal codes'] == postal, 'neighbourhood']
+    return ''.join(hood.unique())
