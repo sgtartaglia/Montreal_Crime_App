@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-pd.options.plotting.backend = "plotly"
+import plotly as plt
 import requests
 import streamlit as st
 import application_function 
