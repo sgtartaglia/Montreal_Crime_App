@@ -1,6 +1,4 @@
 import pandas as pd
-import re
-import plotly as px
 import requests
 import streamlit as st
 ## import and clean crime data
