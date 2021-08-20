@@ -1,3 +1,4 @@
 python -m pip install pandas
 python -m pip install numpy
-python -m pip install plotly==5.2.1
+python -m pip install plotly
+pywin32==300
