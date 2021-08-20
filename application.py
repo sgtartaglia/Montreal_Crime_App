@@ -1,9 +1,6 @@
 import pandas as pd
-import re
-import requests
 import streamlit as st
 import application_function 
-import matplotlib.pyplot as plt
 st.set_page_config(layout='wide')
 scatter_column, setting_column = st.columns((4,1))
 
