@@ -12,7 +12,6 @@ postal_button = setting_column.radio(label='look up postal',options=('look up po
 
 if postal_button == 'look up postal':
     user_input = setting_column.text_input(label='Enter first 3 characters of postal',key='user_choice')
-    Drop_down = setting_column.selectbox('Or Choose a Neighbourhood', application_function.neighbourhood)
     if user_input != '':
         scatter_column.table(application_function.post_look_up(user_input[:3]))
         scatter_column.line_chart(data=application_function.YoY(user_input[:3]))
