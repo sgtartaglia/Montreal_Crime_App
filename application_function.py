@@ -113,5 +113,5 @@ def top_4_by_crime(crime,year):
     df_hi_gb = df_hi_gb.sort_values(ascending=False)
     df_hi_gb = df_hi_gb.to_frame()
     df_hi_gb.rename(columns={'neighbourhood':'hood'}, inplace=True)
-    df_hi_gb.rename(columns={'hood':'#of incedents'}, inplace=True)
+    df_hi_gb.rename(columns={'hood':'# of incedents'}, inplace=True)
     return df_hi_gb
