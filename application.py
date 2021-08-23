@@ -7,10 +7,10 @@ scatter_column, setting_column = st.columns((3,1))
 scatter_column.title('Montreal Crime Data')
 setting_column.title('Settings')
 #app input
-postal_button = setting_column.radio(label='look up postal',options=('look up postal','Look up crime'))
+selection_button = setting_column.radio(label='look up postal',options=('look up postal code','By crime and year'))
 
 
-if postal_button == 'look up postal':
+if selection_button == 'look up postal code':
     user_input = setting_column.text_input(label='Enter first 3 characters of postal',key='user_choice')
     if user_input != '':
         scatter_column.table(application_function.post_look_up(user_input[:3]))
@@ -19,9 +19,9 @@ if postal_button == 'look up postal':
     else:
         scatter_column.header("please enter a postal code")
 
-if postal_button == 'Look up crime':
-        drop_down_crime = setting_column.selectbox(label='Or Choose a Crime',options= application_function.crimes,key='crime')
-        drop_down_year = setting_column.selectbox(label='Or Choose a Year', options=application_function.year,key='year')
+if selection_button == 'By crime and year':
+        drop_down_crime = setting_column.selectbox(label='Choose a Crime',options= application_function.crimes,key='crime')
+        drop_down_year = setting_column.selectbox(label='Choose a Year', options=application_function.year,key='year')
         scatter_column.table(application_function.top_4_by_crime(drop_down_crime,drop_down_year))
 
 
