@@ -51,7 +51,7 @@ df_postal.head()
 df_final = pd.merge(left=df_merged, right= df_postal, left_on='postal', right_on='postal codes')
 
 df_final.head()
-df_final['borough'].value_counts().reset_index().to_csv('incidents per b.csv')
+# df_final['borough'].value_counts().reset_index().to_csv('incidents per b.csv')
 df_final.columns = df_final.columns.str.lower()
 df_final.drop(columns=['postal'], inplace=True)
 df_final.head()
