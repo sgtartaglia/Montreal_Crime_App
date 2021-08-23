@@ -111,7 +111,7 @@ def top_4_by_crime(crime,year):
     df_Home_invasions = df_eng[['postal codes','year','neighbourhood','count','categorie']]
     df_Home_invasions = df_Home_invasions.loc[(df_eng['categorie'] == crime) & (df_eng['year'] == year)]
     df_Home_invasions
-    df_hi_gb = df_Home_invasions.groupby('postal codes')['neighbourhood'].value_counts()
+    df_hi_gb = df_Home_invasions.groupby('postal codes')['neighbourhood'].value_counts().nlargest(5)
     df_hi_gb = df_hi_gb.sort_values(ascending=False)
     df_hi_gb = df_hi_gb.to_frame()
     df_hi_gb.rename(columns={'neighbourhood':'hood'}, inplace=True)
