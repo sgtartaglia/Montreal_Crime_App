@@ -2,8 +2,13 @@ import pandas as pd
 import requests
 import streamlit as st
 ## import and clean crime data
-df_crime = pd.read_csv('interventionscitoyendo.csv',encoding = "ISO-8859-1")
-df_crime.head()
+DATA_URL = 'https://data.montreal.ca/dataset/5829b5b0-ea6f-476f-be94-bc2b8797769a/resource/c6f482bf-bf0f-4960-8b2f-9982c211addd/download/interventionscitoyendo.csv'
+
+
+
+df_crime = pd.read_csv(DATA_URL, encoding = "ISO-8859-1")
+lowercase = lambda x: str(x).lower()
+df_crime.rename(lowercase, axis='columns', inplace=True)
 df_crime_modified = df_crime.copy()
 df_crime_modified.columns = df_crime_modified.columns.str.lower()
 df_crime_modified.head()
@@ -66,7 +71,7 @@ df_eng['categorie'].replace({'Vol de véhicule à moteur':'Motor vehicle theft',
                                                     'Vol dans / sur véhicule à moteur':'Theft in / from a motor vehicle',
                                                     'Vols qualifiés':'Confirmed Theft',
                                                     'Infractions entrainant la mort':'Offenses resulting in death'}, inplace=True)
-df_eng.categorie.unique()
+crimes = df_eng.categorie.unique()
 
 def post_look_up(postal):
     postal = postal.upper()
@@ -94,3 +99,21 @@ def crime_by_year(postal_code,year):
 def get_neighbourhood(postal):
     hood = df_eng.loc[df_eng['postal codes'] == postal, 'neighbourhood']
     return ''.join(hood.unique())
+
+#List of neighbourhoods
+year = df_eng.year.unique()
+neighbourhood = df_eng.neighbourhood.unique()
+neighbourhood = sorted(neighbourhood)
+
+df_eng['count'] = 1
+#show list of top 4 neighbourhoods
+def top_4_by_crime(crime,year):
+    df_Home_invasions = df_eng[['postal codes','year','neighbourhood','count','categorie']]
+    df_Home_invasions = df_Home_invasions.loc[(df_eng['categorie'] == crime) & (df_eng['year'] == year)]
+    df_Home_invasions
+    df_hi_gb = df_Home_invasions.groupby('postal codes')['neighbourhood'].value_counts()
+    df_hi_gb = df_hi_gb.sort_values(ascending=False)
+    df_hi_gb = df_hi_gb.to_frame()
+    df_hi_gb.rename(columns={'neighbourhood':'hood'}, inplace=True)
+    df_hi_gb.rename(columns={'hood':'# of home invastions'}, inplace=True)
+    return df_hi_gb
