@@ -35,12 +35,10 @@ df_corr_dropped = df_corr.drop_duplicates(subset='long lat')
 
 # Merge Data from crime data and postal code data
 df_merged = pd.merge(left = df_crime_modified, right=df_corr_dropped, how='left', left_on=['long lat'], right_on=['long lat'])
-df_merged
 df_merged.drop(columns=['PROVINCE_ABBR','TIME_ZONE','LATITUDE','LONGITUDE','x','y','longitude','latitude','pdq'], inplace = True)
-
 df_merged['postal'] = df_merged.POSTAL_CODE.str.slice(0,3)
-df_merged
-## Import borough postal code data
+
+## Import and merge borough postal code data
 df_postal = pd.read_csv('Montreal Postal Codes.csv')
 
 df_final = pd.merge(left=df_merged, right= df_postal, left_on='postal', right_on='postal codes')
@@ -77,7 +75,6 @@ def post_look_up(postal):
 
 df_eng.loc[df_eng['postal codes'] == 'H4B']
 df_eng['year'] = df_eng['date'].str.slice(0,4)
-df_eng.head()
 
 def YoY(postal):
     postal = postal.upper()
@@ -95,7 +92,7 @@ def get_neighbourhood(postal):
     hood = df_eng.loc[df_eng['postal codes'] == postal, 'neighbourhood']
     return ''.join(hood.unique())
 
-#List of neighbourhoods
+#List of neighbourhoods,years
 year = df_eng.year.unique()
 year = sorted(year)
 
