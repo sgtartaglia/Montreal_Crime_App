@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import application_function 
 scatter_column, setting_column = st.columns((3,1))
+st.set_page_config(page_title='Montreal Crime App')
 
 #app headers
 scatter_column.title('Montreal Crime Data')
@@ -13,7 +14,7 @@ selection_button = setting_column.radio(label='look up postal',options=('look up
 if selection_button == 'look up postal code':
     user_input = setting_column.text_input(label='Enter first 3 characters of postal',key='user_choice')
     if user_input != '':
-        scatter_column.table(application_function.post_look_up(user_input[:3]))
+        scatter_column.dataframe(application_function.post_look_up(user_input[:3]))
         scatter_column.line_chart(data=application_function.YoY(user_input[:3]))
         setting_column.text(application_function.get_neighbourhood(user_input[:3]))
     else:
