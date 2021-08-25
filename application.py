@@ -1,8 +1,9 @@
 import pandas as pd
 import streamlit as st
 import application_function 
-scatter_column, setting_column = st.columns((3,1))
 st.set_page_config(page_title='Montreal Crime App')
+scatter_column, setting_column = st.columns((3,1))
+
 
 #app headers
 scatter_column.title('Montreal Crime Data')
