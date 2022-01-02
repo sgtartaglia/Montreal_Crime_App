@@ -23,7 +23,7 @@ df_crime_modified.head()
 df_crime_modified.loc[df_crime_modified['latitude'] == '1.0']
 
 ## import coordinadte data 
-df_corr = pd.read_csv('CanadianPostalCodes202108.csv')
+df_corr = pd.read_csv('Data/CanadianPostalCodes202108.csv')
 df_corr.head()
 df_corr.LONGITUDE = df_corr.LONGITUDE.astype(str)
 df_corr.LATITUDE = df_corr.LATITUDE.astype(str)
@@ -39,7 +39,7 @@ df_merged.drop(columns=['PROVINCE_ABBR','TIME_ZONE','LATITUDE','LONGITUDE','x','
 df_merged['postal'] = df_merged.POSTAL_CODE.str.slice(0,3)
 
 ## Import and merge borough postal code data
-df_postal = pd.read_csv('Montreal Postal Codes.csv')
+df_postal = pd.read_csv('Data/Montreal Postal Codes.csv')
 
 df_final = pd.merge(left=df_merged, right= df_postal, left_on='postal', right_on='postal codes')
 
